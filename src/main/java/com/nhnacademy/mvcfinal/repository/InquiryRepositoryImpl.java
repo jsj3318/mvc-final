@@ -54,8 +54,8 @@ public class InquiryRepositoryImpl implements InquiryRepository {
         int id = inquiryMap.keySet()
                 .stream()
                 .max(Integer::compareTo)
-                .orElse(1);
-        inquiry.setId(id);
+                .orElse(0);
+        inquiry.setId(id + 1);
         inquiryMap.put(id, inquiry);
         return inquiry;
     }
