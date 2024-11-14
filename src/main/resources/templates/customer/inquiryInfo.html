@@ -18,13 +18,19 @@
   </style>
 </head>
 <body class="container mt-5">
-<h1 class="mb-4">문의 상세 내역</h1>
+
+<div class="d-flex justify-content-between mb-3">
+  <h1 class="mb-4">문의 상세 내역</h1>
+  <button type="submit" class="btn btn-primary" style="height: 50px" onclick="location.href='/cs/'">목록</button>
+</div>
 
 <!-- 문의 상세 정보 -->
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title" th:text="${inquiry.title}">제목</h5>
-    <h6 class="card-subtitle mb-2 text-muted" th:text="${inquiry.category.getName()}">분류</h6>
+    <div class="d-flex justify-content-between">
+      <h5 class="card-title" th:text="${inquiry.title}">제목</h5>
+      <small class="text-muted" th:text="${#temporals.format(inquiry.createdAt, 'yyyy-MM-dd HH:mm')}">작성일시</small>
+    </div>    <h6 class="card-subtitle mb-2 text-muted" th:text="${inquiry.category.getName()}">분류</h6>
     <p class="card-text" th:text="${inquiry.content}">본문</p>
   </div>
 </div>

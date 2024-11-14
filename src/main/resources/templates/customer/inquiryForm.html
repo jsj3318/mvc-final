@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>문의하기</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body class="container mt-5">
+<h1 class="mb-4">문의하기</h1>
+
+<form action="/cs/inquiry/register" method="post">
+
+
+  <div class="form-group">
+    <label for="category">분류</label>
+    <select class="form-control" id="category" name="category" required>
+      <option th:each="category : ${T(com.nhnacademy.mvcfinal.domain.inquiry.InquiryCategory).values()}"
+              th:value="${category.name()}"
+              th:text="${category.name}"></option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="title">제목</label>
+    <input type="text" class="form-control" id="title" name="title" >
+  </div>
+
+  <div class="form-group">
+    <label for="content">본문</label>
+    <textarea class="form-control" id="content" name="content" rows="4" ></textarea>
+  </div>
+
+  <div class="d-flex justify-content-between mb-3">
+  <button type="submit" class="btn btn-primary">제출하기</button>
+  <button type="submit" class="btn btn-danger" onclick="location.href='/cs/'">취소</button>
+  </div>
+
+</form>
+
+</body>
+</html>
