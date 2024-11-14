@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+  <form method="post" action="/student/login">
+    <span th:text="아이디"/>: <input type="text" name="id"/><br/>
+    <span th:text="패스워드"/>: <input type="password" name="pwd"/><br/>
+    <br/>
+    <input type="submit" th:value="로그인"/>
+  </form>
+
+</body>
+</html>

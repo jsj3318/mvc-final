@@ -15,6 +15,6 @@ public abstract class User {
     private String password;    // 암호 (1234)
     private String name;        // 이름 (마르코)
 
-    abstract UserRole getRole();  // 역할 문자열 반환 (customer, manager)
+    public abstract UserRole getRole();  // 역할 문자열 반환 (customer, manager)
 
 }
