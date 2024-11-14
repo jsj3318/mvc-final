@@ -1,6 +1,5 @@
 package com.nhnacademy.mvcfinal.domain.inquiry;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

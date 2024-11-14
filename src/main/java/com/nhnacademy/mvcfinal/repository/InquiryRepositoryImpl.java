@@ -20,6 +20,8 @@ public class InquiryRepositoryImpl implements InquiryRepository {
         // 테스트용 미리 넣는 문의
         save(new Inquiry("테스트 제목", "테스트 본문", "jsj", InquiryCategory.PROBLEM));
         save(new Inquiry("테스트 제목2", "테스트 본문2", "jsj", InquiryCategory.PRAISE));
+        save(new Inquiry("테스트 제목3", "테스트 본문3", "hus", InquiryCategory.PRAISE));
+
     }
 
     @Override

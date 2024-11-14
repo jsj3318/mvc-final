@@ -20,6 +20,7 @@ public class UserRepositoryImpl implements UserRepository {
         // 고객과 담당자 여기서 미리 생성하기
         userMap.put("marco", new Admin("marco", "4444", "마르코"));
         userMap.put("jsj", new Customer("jsj", "1234", "조승주"));
+        userMap.put("hus", new Customer("hus", "1234", "한의석"));
 
     }
 
