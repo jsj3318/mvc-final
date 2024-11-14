@@ -3,7 +3,7 @@ package com.nhnacademy.mvcfinal.domain.user;
 public class Admin extends User {
     // User를 상속받는 관리자 클래스
     @Override
-    UserRole getRole() {
+    public UserRole getRole() {
         return UserRole.ADMIN;
     }
 

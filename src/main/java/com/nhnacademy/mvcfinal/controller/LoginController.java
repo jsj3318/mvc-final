@@ -61,12 +61,10 @@ public class LoginController {
     // 해당 유저가 고객일 경우 고객 메인 /cs/
     // 해당 유저가 관리자일 경우 관리자 메인 /cs/admin
     private String redirectMain(String userId){
-        switch (userRepository.findById(userId).getRole()){
-            case ADMIN:
-                return "redirect:/cs/admin";
-            case CUSTOMER:
-                return "redirect:/cs/";
-        }
+        return switch (userRepository.findById(userId).getRole()) {
+            case ADMIN -> "redirect:/cs/admin";
+            case CUSTOMER -> "redirect:/cs/";
+        };
     }
 
 }
