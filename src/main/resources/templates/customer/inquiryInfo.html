@@ -30,7 +30,8 @@
     <div class="d-flex justify-content-between">
       <h5 class="card-title" th:text="${inquiry.title}">제목</h5>
       <small class="text-muted" th:text="${#temporals.format(inquiry.createdAt, 'yyyy-MM-dd HH:mm')}">작성일시</small>
-    </div>    <h6 class="card-subtitle mb-2 text-muted" th:text="${inquiry.category.getName()}">분류</h6>
+    </div>
+    <h6 class="card-subtitle mb-2 text-muted" th:text="${inquiry.category.getName()}">분류</h6>
     <p class="card-text" th:text="${inquiry.content}">본문</p>
   </div>
 </div>
@@ -40,12 +41,22 @@
                       th:text="${inquiry.answered ? '답변 완료' : '답변 없음'}"></span>
 </div>
 
-<!-- 답변이 된 경우 -->
+<!-- 답변이 있는 경우 -->
+
+
 <div th:if="${inquiry.answered}">
-  <h6>답변 내용</h6>
-  <!--      <p th:text="${inquiry.answerContent}">답변 내용</p>-->
-  <!--      <p><strong>답변 일시:</strong> <span th:text="${#dates.format(inquiry.answerDate, 'yyyy-MM-dd HH:mm')}">답변 일시</span></p>-->
-  <!--      <p><strong>CS 담당자:</strong> <span th:text="${inquiry.csStaff}">담당자 이름</span></p>-->
+  <div class="card">
+    <div class="card-body">
+
+      <div class="d-flex justify-content-between">
+        <p><strong>CS 담당자:</strong> <span th:text="${answer.adminId}">담당자 아이디</span></p>
+        <small class="text-muted" th:text="${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}">작성일시</small>
+      </div>
+
+      <h6>답변 내용</h6>
+      <p th:text="${answer.content}">답변 내용</p>
+    </div>
+  </div>
 </div>
 
 

@@ -1,7 +1,9 @@
 package com.nhnacademy.mvcfinal.controller;
 
 import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
+import com.nhnacademy.mvcfinal.repository.AnswerRepository;
 import com.nhnacademy.mvcfinal.repository.InquiryRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +15,11 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @Controller
 @RequestMapping("/cs")
 @Slf4j
+@RequiredArgsConstructor
 public class InquiryController {
 
     private final InquiryRepository inquiryRepository;
-
-    public InquiryController(InquiryRepository inquiryRepository) {
-        this.inquiryRepository = inquiryRepository;
-    }
+    private final AnswerRepository answerRepository;
 
     @GetMapping("/inquiry/{inquiryId}")
     public String inquiryInfo (
@@ -35,7 +35,14 @@ public class InquiryController {
             throw new IllegalAccessException("잘못된 접근 시도");
         }
 
+        // model 에 문의 객체 전달
         model.addAttribute("inquiry", inquiry);
+
+        // 문의가 답변 된 거면 답변 객체 가져와서 전달
+        if(inquiry.isAnswered()){
+            model.addAttribute("answer", answerRepository.findById(inquiryId));
+        }
+
         return "customer/inquiryInfo";
     }
 
