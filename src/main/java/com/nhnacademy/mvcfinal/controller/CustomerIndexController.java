@@ -2,9 +2,12 @@ package com.nhnacademy.mvcfinal.controller;
 
 import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
 import com.nhnacademy.mvcfinal.repository.InquiryRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -31,6 +34,17 @@ public class CustomerIndexController {
         List<Inquiry> inquiryList =  inquiryRepository.findByUserId(userId);
         model.addAttribute("inquiryList", inquiryList);
         return "customer/index";
+    }
+
+    @PostMapping("/logout")
+    public String logout(
+        HttpServletRequest request
+    ) {
+        // 로그아웃 -> 세션 삭제
+        HttpSession session = request.getSession(false);
+        session.invalidate();
+
+        return "redirect:/cs/login";
     }
 
 }
