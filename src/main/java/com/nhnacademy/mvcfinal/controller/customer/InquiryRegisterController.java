@@ -1,4 +1,4 @@
-package com.nhnacademy.mvcfinal.controller;
+package com.nhnacademy.mvcfinal.controller.customer;
 
 import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
 import com.nhnacademy.mvcfinal.domain.inquiry.InquiryRequest;
