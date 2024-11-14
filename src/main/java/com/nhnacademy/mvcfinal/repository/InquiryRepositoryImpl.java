@@ -1,11 +1,13 @@
 package com.nhnacademy.mvcfinal.repository;
 
 import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
+import com.nhnacademy.mvcfinal.domain.inquiry.InquiryCategory;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class InquiryRepositoryImpl implements InquiryRepository {
@@ -14,13 +16,16 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
     public InquiryRepositoryImpl() {
         inquiryMap = new HashMap<>();
+
+        // 테스트용 미리 넣는 문의
+        save(new Inquiry("테스트 제목", "테스트 본문", "jsj", InquiryCategory.PROBLEM));
     }
 
     @Override
     public List<Inquiry> findByUserId(String userId) {
         List<Inquiry> inquiryList = inquiryMap.values().stream()
                 .filter(inquiry -> inquiry.getUserId().equals(userId))
-                .toList();
+                .collect(Collectors.toList());
 
         inquiryList.sort(
                 (iq1, iq2) -> Integer.compare(iq2.getId(), iq1.getId())
