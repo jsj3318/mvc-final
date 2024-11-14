@@ -1,6 +1,6 @@
 package com.nhnacademy.mvcfinal.repository;
 
-import com.nhnacademy.mvcfinal.domain.User;
+import com.nhnacademy.mvcfinal.domain.user.User;
 
 public interface UserRepository {
 

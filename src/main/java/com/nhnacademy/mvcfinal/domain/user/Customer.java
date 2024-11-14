@@ -1,12 +1,10 @@
-package com.nhnacademy.mvcfinal.domain;
-
-import lombok.AllArgsConstructor;
+package com.nhnacademy.mvcfinal.domain.user;
 
 public class Customer extends User {
     // User를 상속받는 고객 클래스
     @Override
-    String getRole() {
-        return "customer";
+    UserRole getRole() {
+        return UserRole.CUSTOMER;
     }
 
     public Customer(String id, String password, String name) {
