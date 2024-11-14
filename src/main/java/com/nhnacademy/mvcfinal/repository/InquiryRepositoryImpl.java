@@ -19,6 +19,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
         // 테스트용 미리 넣는 문의
         save(new Inquiry("테스트 제목", "테스트 본문", "jsj", InquiryCategory.PROBLEM));
+        save(new Inquiry("테스트 제목2", "테스트 본문2", "jsj", InquiryCategory.PRAISE));
     }
 
     @Override
@@ -38,7 +39,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
     public List<Inquiry> findByNoAnswered() {
         List<Inquiry> inquiryList = inquiryMap.values().stream()
                 .filter(inquiry -> !inquiry.isAnswered())
-                .toList();
+                .collect(Collectors.toList());
 
         inquiryList.sort(
                 (iq1, iq2) -> Integer.compare(iq2.getId(), iq1.getId())
@@ -61,7 +62,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
                 .max(Integer::compareTo)
                 .orElse(0);
         inquiry.setId(id + 1);
-        inquiryMap.put(id, inquiry);
+        inquiryMap.put(inquiry.getId(), inquiry);
         return inquiry;
     }
 

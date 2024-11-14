@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>문의 상세 내역</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .answer-status {
+      font-weight: bold;
+    }
+    .no-answer {
+      color: red;
+    }
+    .answered {
+      color: green;
+    }
+  </style>
+</head>
+<body class="container mt-5">
+<h1 class="mb-4">문의 상세 내역</h1>
+
+<!-- 문의 상세 정보 -->
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title" th:text="${inquiry.title}">제목</h5>
+    <h6 class="card-subtitle mb-2 text-muted" th:text="${inquiry.category.getName()}">분류</h6>
+    <p class="card-text" th:text="${inquiry.content}">본문</p>
+  </div>
+</div>
+
+<div class="mb-3">
+                <span class="answer-status" th:class="${inquiry.answered ? 'answered' : 'no-answer'}"
+                      th:text="${inquiry.answered ? '답변 완료' : '답변 없음'}"></span>
+</div>
+
+<!-- 답변이 된 경우 -->
+<div th:if="${inquiry.answered}">
+  <h6>답변 내용</h6>
+  <!--      <p th:text="${inquiry.answerContent}">답변 내용</p>-->
+  <!--      <p><strong>답변 일시:</strong> <span th:text="${#dates.format(inquiry.answerDate, 'yyyy-MM-dd HH:mm')}">답변 일시</span></p>-->
+  <!--      <p><strong>CS 담당자:</strong> <span th:text="${inquiry.csStaff}">담당자 이름</span></p>-->
+</div>
+
+
+</body>
+</html>
