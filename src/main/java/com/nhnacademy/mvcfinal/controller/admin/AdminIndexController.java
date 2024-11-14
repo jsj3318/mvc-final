@@ -14,7 +14,7 @@ import java.util.List;
 public class AdminIndexController {
     private final InquiryRepository inquiryRepository;
 
-    public AdminIndexController(com.nhnacademy.mvcfinal.repository.InquiryRepository inquiryRepository) {
+    public AdminIndexController(InquiryRepository inquiryRepository) {
         this.inquiryRepository = inquiryRepository;
     }
 
