@@ -28,6 +28,7 @@ public class FileService {
             try (Stream<Path> paths = Files.walk(path)) {
                 // 하위 디렉토리부터 삭제되도록 정렬
                 paths
+                        .filter(file -> !file.equals(path)) // 자기 자신 디렉토리는 제외
                         .sorted(Comparator.reverseOrder())  // 역순으로 정렬하여 하위 디렉토리부터 삭제
                         .forEach(file -> {
                             try {
