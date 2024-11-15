@@ -27,6 +27,7 @@
 <div>
   <div class="image-gallery">
     <div th:each="image : ${inquiry.images}">
+      <a th:href="@{|/images/${image}|}" target="_blank">
       <img
               th:src="@{|/images/${image}|}"
               alt="이미지 로드 실패"
