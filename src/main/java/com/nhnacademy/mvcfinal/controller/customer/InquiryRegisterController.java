@@ -64,9 +64,6 @@ public class InquiryRegisterController {
         String path = imagesPath + inquiry.getId() + "/";
         Path dirPath = Paths.get(path);
 
-        // 이미 있는 디렉토리 제거
-        fileService.deleteDir(dirPath);
-
         // 이미지 파일이 존재한다면 파일 처리
         if(!images.isEmpty()) {
 

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,21 +23,30 @@ public class FileService {
     }
 
     public void deleteDir(Path path) throws IOException {
-        if(Files.exists(path)) {
-            // 디렉토리 하위의 모든 파일 삭제
-            Stream<Path> paths = Files.walk(path);
-            paths.filter(Files::isRegularFile)
-                    .forEach(file -> {
-                        try {
-                            Files.delete(file);
-                        } catch (IOException e) {
-                                throw new RuntimeException(e);
+        if (Files.exists(path)) {
+            // 디렉토리 하위의 모든 파일 및 디렉토리 삭제 (하위 디렉토리부터 삭제)
+            try (Stream<Path> paths = Files.walk(path)) {
+                // 하위 디렉토리부터 삭제되도록 정렬
+                paths
+                        .sorted(Comparator.reverseOrder())  // 역순으로 정렬하여 하위 디렉토리부터 삭제
+                        .forEach(file -> {
+                            try {
+                                if (Files.isDirectory(file)) {
+                                    // 디렉토리인 경우, 비어있는 디렉토리 삭제
+                                    Files.delete(file);
+                                } else if (Files.isRegularFile(file)) {
+                                    // 파일인 경우 파일 삭제
+                                    Files.delete(file);
+                                }
+                            } catch (IOException e) {
+                                throw new RuntimeException("파일 또는 디렉토리 삭제 중 오류 발생: " + file, e);
                             }
                         });
-                // 디렉토리 삭제
-                Files.delete(path);
+            }
+
         }
     }
+
 
     public void createDir(Path path) throws IOException {
         // 새로 생성
@@ -56,7 +66,7 @@ public class FileService {
                 // 서버측으로 파일 업로드
                 image.transferTo(filePath);
                 // 문의 객체에 파일 경로 저장
-                inquiry.addImage(filePath);
+                inquiry.addImage(inquiry.getId() + "/" + name);
             } else {
                 throw new IllegalArgumentException("잘못된 파일입니다!");
             }

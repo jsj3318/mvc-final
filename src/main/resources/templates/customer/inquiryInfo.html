@@ -36,6 +36,14 @@
   </div>
 </div>
 
+<div>
+  <div class="image-gallery">
+    <div th:each="image : ${inquiry.images}">
+      <img th:src="@{|/images/${image}|}" alt="Inquiry Image" class="img-thumbnail" loading="lazy"/>
+    </div>
+  </div>
+</div>
+
 <div class="mb-3">
                 <span class="answer-status" th:class="${inquiry.answered ? 'answered' : 'no-answer'}"
                       th:text="${inquiry.answered ? '답변 완료' : '답변 없음'}"></span>
@@ -55,6 +63,7 @@
 
       <h6>답변 내용</h6>
       <p th:text="${answer.content}">답변 내용</p>
+
     </div>
   </div>
 </div>

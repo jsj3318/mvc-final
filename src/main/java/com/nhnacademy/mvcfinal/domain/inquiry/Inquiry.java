@@ -3,7 +3,6 @@ package com.nhnacademy.mvcfinal.domain.inquiry;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class Inquiry {
     }
 
 
-    public void addImage(Path filePath) {
+    public void addImage(String filePath) {
         images.add(filePath.toString());
     }
 }
