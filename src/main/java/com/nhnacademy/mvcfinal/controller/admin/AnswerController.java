@@ -6,6 +6,7 @@ import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
 import com.nhnacademy.mvcfinal.exception.ValidationFailedException;
 import com.nhnacademy.mvcfinal.repository.AnswerRepository;
 import com.nhnacademy.mvcfinal.repository.InquiryRepository;
+import com.nhnacademy.mvcfinal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class AnswerController {
     private final InquiryRepository inquiryRepository;
     private final AnswerRepository answerRepository;
+    private final UserRepository userRepository;
 
     @GetMapping("/answer/{inquiryId}")
     public String answerForm(
@@ -34,7 +36,9 @@ public class AnswerController {
             throw new IllegalAccessException("이미 답변 완료된 문의입니다!");
         }
 
+        // 문의 객체와 유저의 이름 전달
         model.addAttribute("inquiry", inquiry);
+        model.addAttribute("name", userRepository.findById(inquiry.getUserId()).getName());
         return "admin/answerForm";
     }
 
@@ -56,6 +60,9 @@ public class AnswerController {
                 userId
         );
         answerRepository.save(answer);
+
+        // 해당 문의 답변 완료 처리
+        inquiryRepository.findById(inquiryId).doAnswer();
 
         return "redirect:/cs/admin";
     }

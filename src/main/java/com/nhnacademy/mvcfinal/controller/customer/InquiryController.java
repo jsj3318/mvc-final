@@ -1,8 +1,10 @@
 package com.nhnacademy.mvcfinal.controller.customer;
 
+import com.nhnacademy.mvcfinal.domain.answer.Answer;
 import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
 import com.nhnacademy.mvcfinal.repository.AnswerRepository;
 import com.nhnacademy.mvcfinal.repository.InquiryRepository;
+import com.nhnacademy.mvcfinal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ public class InquiryController {
 
     private final InquiryRepository inquiryRepository;
     private final AnswerRepository answerRepository;
+    private final UserRepository userRepository;
 
     @GetMapping("/inquiry/{inquiryId}")
     public String inquiryInfo (
@@ -40,7 +43,10 @@ public class InquiryController {
 
         // 문의가 답변 된 거면 답변 객체 가져와서 전달
         if(inquiry.isAnswered()){
-            model.addAttribute("answer", answerRepository.findById(inquiryId));
+            Answer answer = answerRepository.findById(inquiryId);
+            model.addAttribute("answer", answer);
+            // 답변자 이름
+            model.addAttribute("name", userRepository.findById(answer.getAdminId()).getName());
         }
 
         return "customer/inquiryInfo";

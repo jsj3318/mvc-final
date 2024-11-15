@@ -49,7 +49,7 @@
     <div class="card-body">
 
       <div class="d-flex justify-content-between">
-        <p><strong>CS 담당자:</strong> <span th:text="${answer.adminId}">담당자 아이디</span></p>
+        <p><strong>CS 담당자:</strong> <span th:text="${name + ' (' + answer.adminId + ')'}">담당자 아이디</span></p>
         <small class="text-muted" th:text="${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}">작성일시</small>
       </div>
 
