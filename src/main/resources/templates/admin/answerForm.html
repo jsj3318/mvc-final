@@ -9,6 +9,7 @@
 <body class="container mt-5">
 <h1 class="mb-4">답변하기</h1>
 
+<!-- 문의 내용 -->
 <div class="card mb-4">
   <div class="card-header d-flex justify-content-between align-items-center">
     <h5 th:text="${inquiry.title}" class="mb-0"></h5>
@@ -22,10 +23,27 @@
   </div>
 </div>
 
+<!-- 이미지 -->
+<div>
+  <div class="image-gallery">
+    <div th:each="image : ${inquiry.images}">
+      <img
+              th:src="@{|/images/${image}|}"
+              alt="이미지 로드 실패"
+              class="img-thumbnail"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+      />
+      <span style="display:none;" class="no-image-text">이미지 로드 실패 (잠시 후 새로고침)</span>
+    </div>
+  </div>
+</div>
+
+<!-- 답변 폼 -->
 <form method="post" th:action="@{/cs/admin/answer/{inquiryId}(inquiryId=${inquiry.id})}" >
 
   <div class="form-group">
-    <label for="content">본문</label>
+    <br/> <br/> <br/>
+    <label for="content">답변 작성</label>
     <textarea class="form-control" id="content" name="content" rows="4" ></textarea>
   </div>
 

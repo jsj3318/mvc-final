@@ -6,6 +6,7 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
+
     .answer-status {
       font-weight: bold;
     }
@@ -15,7 +16,10 @@
     .answered {
       color: green;
     }
+
+
   </style>
+
 </head>
 <body class="container mt-5">
 
@@ -36,10 +40,17 @@
   </div>
 </div>
 
+<!-- 이미지 -->
 <div>
   <div class="image-gallery">
     <div th:each="image : ${inquiry.images}">
-      <img th:src="@{|/images/${image}|}" alt="Inquiry Image" class="img-thumbnail" loading="lazy"/>
+      <img
+              th:src="@{|/images/${image}|}"
+              alt="이미지 로드 실패"
+              class="img-thumbnail"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+      />
+      <span style="display:none;" class="no-image-text">이미지 서버에 업로드 중...</span>
     </div>
   </div>
 </div>
