@@ -9,7 +9,7 @@
 <body class="container mt-5">
 <h1 class="mb-4">문의하기</h1>
 
-<form action="/cs/inquiry/register" method="post">
+<form action="/cs/inquiry/register" method="post" enctype="multipart/form-data">
 
 
   <div class="form-group">
@@ -29,6 +29,14 @@
   <div class="form-group">
     <label for="content">본문</label>
     <textarea class="form-control" id="content" name="content" rows="4" ></textarea>
+  </div>
+
+<!-- 사진 -->
+  <div class="form-group">
+    <label for="images">첨부 사진</label>
+    <input type="file" class="form-control-file" id="images" name="images" multiple>
+    <small class="form-text text-muted">여러 파일 선택 가능</small>
+    <small class="form-text text-muted">png, jpg, jpeg, gif</small>
   </div>
 
   <div class="d-flex justify-content-between mb-3">

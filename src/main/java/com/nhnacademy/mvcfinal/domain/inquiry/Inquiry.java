@@ -3,7 +3,10 @@ package com.nhnacademy.mvcfinal.domain.inquiry;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class Inquiry {
@@ -17,6 +20,8 @@ public class Inquiry {
     private LocalDateTime createdAt;    // 문의 작셩 일시
     private InquiryCategory category;   // 문의 분류 카테고리
 
+    private List<String> images;
+
     public Inquiry(String title, String content, String userId, InquiryCategory category) {
         this.title = title;
         this.content = content;
@@ -25,6 +30,7 @@ public class Inquiry {
 
         answered = false;
         createdAt = LocalDateTime.now();
+        images = new ArrayList<>();
     }
 
     public void doAnswer() {
@@ -32,4 +38,7 @@ public class Inquiry {
     }
 
 
+    public void addImage(Path filePath) {
+        images.add(filePath.toString());
+    }
 }
