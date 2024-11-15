@@ -10,9 +10,13 @@ public interface InquiryRepository {
 
     // 작성자의 아이디로 검색해서 문의 목록 반환
     List<Inquiry> findByUserId(String userId);
+    // 아이디와 카테고리로 목록 반환
+    List<Inquiry> findByUserIdAndCategory(String userId, String category);
 
     // 답변 완료 되지 않은 문의 목록 반환
     List<Inquiry> findByNoAnswered();
+    // 답변 완료 되지 않은 문의 목록의 카테고리 필터링
+    List<Inquiry> findByNoAnsweredAndCategory(String category);
 
     // 문의 id로 문의 반환
     Inquiry findById(int id);

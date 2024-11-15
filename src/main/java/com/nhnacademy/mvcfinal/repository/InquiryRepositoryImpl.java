@@ -2,6 +2,7 @@ package com.nhnacademy.mvcfinal.repository;
 
 import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
 import com.nhnacademy.mvcfinal.domain.inquiry.InquiryCategory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Repository
 public class InquiryRepositoryImpl implements InquiryRepository {
 
@@ -40,10 +42,51 @@ public class InquiryRepositoryImpl implements InquiryRepository {
     }
 
     @Override
+    public List<Inquiry> findByUserIdAndCategory(String userId, String category) {
+        List<Inquiry> inquiryList = inquiryMap.values().stream()
+                .filter(inquiry -> inquiry.getUserId().equals(userId))
+                .collect(Collectors.toList());
+
+        // 카테고리 파라미터가 null이 아니고 넘어왔다면 카테고리로도 필터
+        if(category != null && !category.isEmpty()) {
+            inquiryList = inquiryList.stream()
+                    .filter(inquiry -> inquiry.getCategory().name().equalsIgnoreCase(category))
+                    .collect(Collectors.toList());
+        }
+
+        inquiryList.sort(
+                (iq1, iq2) -> Integer.compare(iq2.getId(), iq1.getId())
+        );
+
+        return inquiryList;
+
+    }
+
+    @Override
     public List<Inquiry> findByNoAnswered() {
         List<Inquiry> inquiryList = inquiryMap.values().stream()
                 .filter(inquiry -> !inquiry.isAnswered())
                 .collect(Collectors.toList());
+
+        inquiryList.sort(
+                (iq1, iq2) -> Integer.compare(iq2.getId(), iq1.getId())
+        );
+
+        return inquiryList;
+    }
+
+    @Override
+    public List<Inquiry> findByNoAnsweredAndCategory(String category) {
+        List<Inquiry> inquiryList = inquiryMap.values().stream()
+                .filter(inquiry -> !inquiry.isAnswered())
+                .collect(Collectors.toList());
+
+        // 카테고리 파라미터가 null이 아니고 넘어왔다면 카테고리로도 필터
+        if(category != null && !category.isEmpty()) {
+            inquiryList = inquiryList.stream()
+                    .filter(inquiry -> inquiry.getCategory().name().equalsIgnoreCase(category))
+                    .collect(Collectors.toList());
+        }
 
         inquiryList.sort(
                 (iq1, iq2) -> Integer.compare(iq2.getId(), iq1.getId())

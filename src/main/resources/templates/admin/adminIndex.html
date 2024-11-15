@@ -15,6 +15,20 @@
   </form>
 </div>
 
+<!-- 카테고리 버튼 목록 -->
+<div class="d-flex flex-wrap justify-content-start mb-3">
+  <button class="btn btn-outline-primary m-1"
+          th:classappend="${selectedCategory == null or selectedCategory == '' ? ' active' : ''}"
+          onclick="location.href='/cs/admin'">전체 보기</button>
+  <div th:each="category : ${categoryList}"
+       class="m-1">
+    <button class="btn btn-outline-primary"
+            th:classappend="${category.name() == selectedCategory ? ' active' : ''}"
+            th:onclick="|location.href='@{/cs/admin(category=${category.name()})}'|"
+            th:text="${category.name}"></button>
+  </div>
+</div>
+
 <!-- 문의 목록 테이블 -->
 <table class="table table-bordered table-hover">
   <thead class="thead-light">

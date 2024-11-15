@@ -1,15 +1,13 @@
 package com.nhnacademy.mvcfinal.controller.customer;
 
 import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
+import com.nhnacademy.mvcfinal.domain.inquiry.InquiryCategory;
 import com.nhnacademy.mvcfinal.repository.InquiryRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,14 +24,20 @@ public class CustomerIndexController {
     @GetMapping("/")
     public String index(
             @SessionAttribute("userId") String userId,
-            Model model
+            Model model,
+            @RequestParam(value = "category", required = false) String category
     ) {
         // 로그인 되어있는 유저의 아이디를 이용해서
         // 해당 유저가 작성한 문의의 목록을 출력하는 인덱스 페이지 출력
-        // 모델로 리스트를 넘겨주기
-        List<Inquiry> inquiryList =  inquiryRepository.findByUserId(userId);
+
+        // 모델로 카테고리 리스트 넘겨주기
+        model.addAttribute("categoryList", InquiryCategory.values());
+        model.addAttribute("selectedCategory", category);
+
+        // 모델로 문의 리스트를 넘겨주기
+        List<Inquiry> inquiryList =  inquiryRepository.findByUserIdAndCategory(userId, category);
         model.addAttribute("inquiryList", inquiryList);
-        return "customer/index";
+        return "customer/customerIndex";
     }
 
     @PostMapping("/logout")
