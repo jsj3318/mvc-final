@@ -34,6 +34,7 @@ public class InquiryRegisterController {
             throw new ValidationFailedException(bindingResult);
         }
 
+        // 문의를 생성하고 저장 후, 해당 문의 상세 페이지로 이동한다
         Inquiry inquiry = inquiryRepository.save(new Inquiry(
                 inquiryRequest.getTitle(),
                 inquiryRequest.getContent(),
