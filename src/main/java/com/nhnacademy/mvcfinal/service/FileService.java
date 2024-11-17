@@ -75,9 +75,18 @@ public class FileService {
     }
 
     // 파일이 알맞은 이미지 형식인지 검사
-    private boolean isValidImage(MultipartFile image) {
+    public boolean isValidImage(MultipartFile image) {
         String filename = image.getOriginalFilename();
-        String fileExtension = filename != null ? filename.substring(filename.lastIndexOf(".")) : "";
+        if(filename == null || filename.isEmpty()) {
+            return false;
+        }
+
+        int lastDotIndex = filename.lastIndexOf(".");
+        if (lastDotIndex == -1) {
+            return false;  // 확장자가 없으면 false 반환
+        }
+
+        String fileExtension = filename.substring(lastDotIndex);
 
         return fileExtension.equalsIgnoreCase(".jpg") ||
                 fileExtension.equalsIgnoreCase(".jpeg") ||

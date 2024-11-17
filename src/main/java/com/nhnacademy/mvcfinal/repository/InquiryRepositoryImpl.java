@@ -4,6 +4,7 @@ import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,14 +18,6 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
     public InquiryRepositoryImpl() {
         inquiryMap = new HashMap<>();
-
-        // 테스트용 미리 넣는 문의
-//        Inquiry inquiry1 = new Inquiry("테스트 제목", "테스트 본문", "jsj", InquiryCategory.PROBLEM);
-//        inquiry1.doAnswer();
-//        save(inquiry1);
-//        save(new Inquiry("테스트 제목2", "테스트 본문2", "jsj", InquiryCategory.PRAISE));
-//        save(new Inquiry("테스트 제목3", "테스트 본문3", "hus", InquiryCategory.PRAISE));
-
     }
 
 
@@ -34,7 +27,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
                 // 유저 아이디로 필터링
                 inquiryMap.values().stream()
                         .filter(inquiry -> inquiry.getUserId().equals(userId))
-                        .collect(Collectors.toList()),
+                        .toList(),
                 category
         );
 
@@ -47,7 +40,7 @@ public class InquiryRepositoryImpl implements InquiryRepository {
                 // 답변되지 않은 여부로 필터링
                 inquiryMap.values().stream()
                         .filter(inquiry -> !inquiry.isAnswered())
-                        .collect(Collectors.toList()),
+                        .toList(),
                 category
         );
     }
@@ -58,6 +51,8 @@ public class InquiryRepositoryImpl implements InquiryRepository {
             inquiries = inquiries.stream()
                     .filter(inquiry -> inquiry.getCategory().name().equalsIgnoreCase(category))
                     .collect(Collectors.toList());
+        } else {
+            inquiries = new ArrayList<>(inquiries);
         }
 
         inquiries.sort((iq1, iq2) -> Integer.compare(iq2.getId(), iq1.getId()));

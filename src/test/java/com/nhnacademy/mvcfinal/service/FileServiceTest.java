@@ -70,9 +70,11 @@ class FileServiceTest {
         inquiry.setId(1);
 
         MockMultipartFile imageFile = new MockMultipartFile("images", "test.jpg", "image/jpg", new byte[]{1, 2, 3});
+        MockMultipartFile imageFile2 = new MockMultipartFile("images", "test2.jpeg", "image/jpeg", new byte[]{1, 2, 3});
+        MockMultipartFile imageFile3 = new MockMultipartFile("images", "test3.png", "image/png", new byte[]{1, 2, 3});
         String uploadPath = tempDir.toString() + "/";
 
-        fileService.uploadInquiryImages(uploadPath, List.of(imageFile), inquiry);
+        fileService.uploadInquiryImages(uploadPath, List.of(imageFile, imageFile2, imageFile3), inquiry);
 
         Path uploadedFile = tempDir.resolve("inquiry-1_1.jpg");
         assertThat(Files.exists(uploadedFile)).isTrue();
@@ -85,9 +87,39 @@ class FileServiceTest {
         inquiry.setId(1);
 
         MockMultipartFile invalidFile = new MockMultipartFile("images", "test.txt", "text/plain", new byte[]{1, 2, 3});
+        List<MultipartFile> images = List.of(invalidFile);
         String uploadPath = tempDir.toString() + "/";
 
-        assertThrows(IllegalArgumentException.class, () -> fileService.uploadInquiryImages(uploadPath, List.of(invalidFile), inquiry));
+        assertThrows(IllegalArgumentException.class, () -> {
+            fileService.uploadInquiryImages(uploadPath, images, inquiry);
+        });
+    }
+
+    @Test
+    void isValidImage_nullFilename() {
+        // filename이 null인 경우
+        MockMultipartFile imageFile = new MockMultipartFile("images", null, "image/jpg", new byte[]{1, 2, 3});
+        boolean result = fileService.isValidImage(imageFile);
+
+        assertThat(result).isFalse();  // filename이 null이면 false를 반환해야 한다.
+    }
+
+    @Test
+    void isValidImage_emptyFilename() {
+        // filename이 빈 문자열인 경우
+        MockMultipartFile imageFile = new MockMultipartFile("images", "", "image/jpg", new byte[]{1, 2, 3});
+        boolean result = fileService.isValidImage(imageFile);
+
+        assertThat(result).isFalse();  // filename이 빈 문자열이면 false를 반환해야 한다.
+    }
+
+
+    @Test
+    void isValidImage_noExtension() {
+        MockMultipartFile imageFile = new MockMultipartFile("images", "test", "image/jpg", new byte[]{1, 2, 3});
+        boolean result = fileService.isValidImage(imageFile);
+
+        assertThat(result).isFalse();
     }
 
 }
