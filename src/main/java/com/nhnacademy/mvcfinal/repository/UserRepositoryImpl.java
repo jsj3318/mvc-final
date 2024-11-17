@@ -1,7 +1,7 @@
 package com.nhnacademy.mvcfinal.repository;
 
-import com.nhnacademy.mvcfinal.domain.user.Customer;
 import com.nhnacademy.mvcfinal.domain.user.Admin;
+import com.nhnacademy.mvcfinal.domain.user.Customer;
 import com.nhnacademy.mvcfinal.domain.user.User;
 import org.springframework.stereotype.Repository;
 

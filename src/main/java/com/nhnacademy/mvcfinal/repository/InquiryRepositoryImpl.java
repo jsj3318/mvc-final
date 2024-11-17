@@ -1,7 +1,6 @@
 package com.nhnacademy.mvcfinal.repository;
 
 import com.nhnacademy.mvcfinal.domain.inquiry.Inquiry;
-import com.nhnacademy.mvcfinal.domain.inquiry.InquiryCategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
