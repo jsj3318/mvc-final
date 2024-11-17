@@ -38,6 +38,6 @@ public class Inquiry {
 
 
     public void addImage(String filePath) {
-        images.add(filePath.toString());
+        images.add(filePath);
     }
 }
