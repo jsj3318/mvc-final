@@ -28,10 +28,6 @@ class FileServiceTest {
         fileService = new FileService();
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void cleanEmptyFiles() {
         MockMultipartFile validFile = new MockMultipartFile("images", "test.png", "image/png", new byte[]{1, 2, 3});

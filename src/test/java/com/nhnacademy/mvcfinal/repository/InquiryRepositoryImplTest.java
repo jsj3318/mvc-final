@@ -47,6 +47,15 @@ class InquiryRepositoryImplTest {
     }
 
     @Test
+    void findByNoAnsweredAndCategory_nullCategory() {
+        List<Inquiry> actual = inquiryRepository.findByNoAnsweredAndCategory(null);
+        assertEquals(4, actual.size());
+
+        actual = inquiryRepository.findByNoAnsweredAndCategory("");
+        assertEquals(4, actual.size());
+    }
+
+    @Test
     void findById() {
         Inquiry actual = inquiryRepository.findById(2);
         assertEquals("title2", actual.getTitle());

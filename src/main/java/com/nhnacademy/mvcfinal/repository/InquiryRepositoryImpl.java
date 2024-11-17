@@ -30,44 +30,38 @@ public class InquiryRepositoryImpl implements InquiryRepository {
 
     @Override
     public List<Inquiry> findByUserIdAndCategory(String userId, String category) {
-        List<Inquiry> inquiryList = inquiryMap.values().stream()
-                .filter(inquiry -> inquiry.getUserId().equals(userId))
-                .collect(Collectors.toList());
-
-        // 카테고리 파라미터가 null이 아니고 넘어왔다면 카테고리로도 필터
-        if(category != null && !category.isEmpty()) {
-            inquiryList = inquiryList.stream()
-                    .filter(inquiry -> inquiry.getCategory().name().equalsIgnoreCase(category))
-                    .collect(Collectors.toList());
-        }
-
-        inquiryList.sort(
-                (iq1, iq2) -> Integer.compare(iq2.getId(), iq1.getId())
+        return filterAndSortInquiry(
+                // 유저 아이디로 필터링
+                inquiryMap.values().stream()
+                        .filter(inquiry -> inquiry.getUserId().equals(userId))
+                        .collect(Collectors.toList()),
+                category
         );
-
-        return inquiryList;
 
     }
 
 
     @Override
     public List<Inquiry> findByNoAnsweredAndCategory(String category) {
-        List<Inquiry> inquiryList = inquiryMap.values().stream()
-                .filter(inquiry -> !inquiry.isAnswered())
-                .collect(Collectors.toList());
+        return filterAndSortInquiry(
+                // 답변되지 않은 여부로 필터링
+                inquiryMap.values().stream()
+                        .filter(inquiry -> !inquiry.isAnswered())
+                        .collect(Collectors.toList()),
+                category
+        );
+    }
 
-        // 카테고리 파라미터가 null이 아니고 넘어왔다면 카테고리로도 필터
-        if(category != null && !category.isEmpty()) {
-            inquiryList = inquiryList.stream()
+    private List<Inquiry> filterAndSortInquiry(List<Inquiry> inquiries, String category) {
+        // 카테고리로 필터링 하고 id 역순으로 정렬 -> 최근 등록한 것이 앞으로 온다
+        if (category != null && !category.isEmpty()) {
+            inquiries = inquiries.stream()
                     .filter(inquiry -> inquiry.getCategory().name().equalsIgnoreCase(category))
                     .collect(Collectors.toList());
         }
 
-        inquiryList.sort(
-                (iq1, iq2) -> Integer.compare(iq2.getId(), iq1.getId())
-        );
-
-        return inquiryList;
+        inquiries.sort((iq1, iq2) -> Integer.compare(iq2.getId(), iq1.getId()));
+        return inquiries;
     }
 
     @Override
