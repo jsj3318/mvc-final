@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -95,31 +97,23 @@ class FileServiceTest {
         });
     }
 
-    @Test
-    void isValidImage_nullFilename() {
-        // filename이 null인 경우
-        MockMultipartFile imageFile = new MockMultipartFile("images", null, "image/jpg", new byte[]{1, 2, 3});
+    @ParameterizedTest
+    @ValueSource(strings = { "null", "", "test" })  // null, empty, no extension cases
+    void isValidImage_withDifferentFilenames(String filename) {
+        // filename이 null인 경우, 빈 문자열인 경우, 확장자가 없는 경우
+        MockMultipartFile imageFile;
+
+        if ("null".equals(filename)) {
+            imageFile = new MockMultipartFile("images", null, "image/jpg", new byte[]{1, 2, 3});
+        } else {
+            imageFile = new MockMultipartFile("images", filename, "image/jpg", new byte[]{1, 2, 3});
+        }
+
         boolean result = fileService.isValidImage(imageFile);
 
-        assertThat(result).isFalse();  // filename이 null이면 false를 반환해야 한다.
-    }
-
-    @Test
-    void isValidImage_emptyFilename() {
-        // filename이 빈 문자열인 경우
-        MockMultipartFile imageFile = new MockMultipartFile("images", "", "image/jpg", new byte[]{1, 2, 3});
-        boolean result = fileService.isValidImage(imageFile);
-
-        assertThat(result).isFalse();  // filename이 빈 문자열이면 false를 반환해야 한다.
-    }
-
-
-    @Test
-    void isValidImage_noExtension() {
-        MockMultipartFile imageFile = new MockMultipartFile("images", "test", "image/jpg", new byte[]{1, 2, 3});
-        boolean result = fileService.isValidImage(imageFile);
-
+        // filename이 null, 빈 문자열, 확장자가 없으면 false여야 한다.
         assertThat(result).isFalse();
     }
+
 
 }
