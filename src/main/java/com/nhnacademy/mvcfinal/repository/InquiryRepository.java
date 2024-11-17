@@ -8,13 +8,9 @@ public interface InquiryRepository {
 
     // 최근에 작성한 문의가 먼저 보이도록 문의 id 내림차순 정렬
 
-    // 작성자의 아이디로 검색해서 문의 목록 반환
-    List<Inquiry> findByUserId(String userId);
     // 아이디와 카테고리로 목록 반환
     List<Inquiry> findByUserIdAndCategory(String userId, String category);
 
-    // 답변 완료 되지 않은 문의 목록 반환
-    List<Inquiry> findByNoAnswered();
     // 답변 완료 되지 않은 문의 목록의 카테고리 필터링
     List<Inquiry> findByNoAnsweredAndCategory(String category);
 

@@ -39,6 +39,13 @@ class CustomerIndexControllerTest {
     }
 
     @Test
+    void notLogin() throws Exception {
+        mockMvc.perform(get("/cs/"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/cs/login"));
+    }
+
+    @Test
     void index() throws Exception {
         List<Inquiry> inquiryList = Arrays.asList(
                 new Inquiry("title", "content", "jsj", InquiryCategory.PRAISE)
