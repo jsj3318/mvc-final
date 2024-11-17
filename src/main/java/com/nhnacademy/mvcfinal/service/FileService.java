@@ -22,7 +22,7 @@ public class FileService {
                 .collect(Collectors.toList());
     }
 
-    public void deleteDir(Path path) throws IOException {
+    public void deleteDirContents(Path path) throws IOException {
         if (Files.exists(path)) {
             // 디렉토리 하위의 모든 파일 및 디렉토리 삭제 (하위 디렉토리부터 삭제)
             try (Stream<Path> paths = Files.walk(path)) {

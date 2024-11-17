@@ -21,7 +21,7 @@ public class ImageCleanService {
 
     @PostConstruct
     public void init() throws IOException {
-        fileService.deleteDir(Paths.get(imagesPath));
+        fileService.deleteDirContents(Paths.get(imagesPath));
     }
 
 }
