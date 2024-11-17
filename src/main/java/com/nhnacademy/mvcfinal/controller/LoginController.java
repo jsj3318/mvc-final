@@ -3,11 +3,14 @@ package com.nhnacademy.mvcfinal.controller;
 import com.nhnacademy.mvcfinal.exception.LoginFailException;
 import com.nhnacademy.mvcfinal.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequestMapping("/cs/login")
 public class LoginController {
@@ -17,6 +20,7 @@ public class LoginController {
     public LoginController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
 
     @GetMapping
     public String loginForm(
@@ -35,8 +39,7 @@ public class LoginController {
     public String login(
             @RequestParam("id") String id,
             @RequestParam("pwd") String pwd,
-            HttpServletRequest request,
-            HttpServletResponse response
+            HttpServletRequest request
     ) {
         // 입력 받은 아이디와 암호가 존재하고 일치하는지 검사한다
         if(userRepository.match(id, pwd)) {
@@ -53,6 +56,15 @@ public class LoginController {
         // 로그인 실패 예외 발생시킴
         throw new LoginFailException(id+" 계정 로그인 실패!");
 
+    }
+
+    // 로그인 실패 예외 핸들러
+    @ExceptionHandler(LoginFailException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleLoginFailException(LoginFailException ex, Model model) {
+        log.error("에러:{}", ex);
+        model.addAttribute("exception", ex);
+        return "error";
     }
 
 
